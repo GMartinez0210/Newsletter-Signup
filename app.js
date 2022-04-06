@@ -1,6 +1,7 @@
+require("dotenv").config()
+
 const express = require("express");
 const body_parser = require("body-parser");
-const request = require("request");
 const https = require("https")
 
 const app = express();
@@ -41,13 +42,13 @@ app.post("/", function(req, res) {
     const json_data = JSON.stringify(data);
 
     // refering to the mailchimp url
-    const url = "https://us14.api.mailchimp.com/3.0/lists/c060892aaf";
+    const url = `https://us14.api.mailchimp.com/3.0/lists/${process.env.AUDIENCE_ID}`;
     
     // refering to the options mailchimp needs
     const options = {
         // method is the most important option I need to specify
         method: "POST",
-        auth: "genaro0210:1e202fbad4450537381762b19723ade7-us14"
+        auth: `${process.env.OWNER}:${process.env.API_KEY}`
     };
 
     // create a constant called request to request data from the url and options given
@@ -80,12 +81,3 @@ app.post("/failure", function(req, res) {
 app.listen(process.env.PORT || 3000, function() {
     console.log("Server is running on port 3000");
 });
-
-/*
-app.listen(3000, function() {
-    console.log("Server started on port: 3000");
-});
-*/
-
-// Api key: 1e202fbad4450537381762b19723ade7-us14
-// List id: c060892aaf
